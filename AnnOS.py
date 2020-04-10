@@ -109,14 +109,22 @@ class MyQLabel(QLabel):
         
         for ann in CurrentAnnos.keypoints:
             keypoints = np.array(ann['keypoint']).reshape((11,3))
+            self.pen.setWidth(5)
+            self.pen.setBrush(Qt.green)
             for point in keypoints:
                 if(point[2]>0):
                     qp.setPen(self.pen)
                     qp.drawPoint(point[0], point[1]) 
+            
             box = ann['box']
             rect =QRect(box[0],box[1],box[2]-box[0],box[3]-box[1])
+            
+            self.pen.setWidth(3)
+            self.pen.setBrush(Qt.blue)
             qp.setPen(self.pen)
-            qp.drawRect(rect) 
+            qp.drawRect(rect)
+            self.pen.setBrush(Qt.red) 
+
         qp.end()
         
     def mouseMoveEvent(self,e):
@@ -246,10 +254,8 @@ class ControlWindow(QMainWindow):
         BodyPartBox.setLayout(BodyPartBoxlayout)
         BodyPartBox.setGeometry(10, 30, 90, 600) 
 
-		# self.hintbox = QLabel(self)
-		# self.hintbox.setGeometry(0, 0, 1000, 50)
-		# self.hintbox.setText('下一张／上一张图： Q／A     本图下一个人：R      下一个部位：W   【进入下一张图时候（Q）本图结果自动保存。】') 
-    
+		# self.hintbox.setText('下一张／上一张图： Q／A     本图下一个人：R      下一个部位：W   
+        
     def saveAnn(self):
         global CurrentAnnos
         CurrentAnnos.savejson() 
