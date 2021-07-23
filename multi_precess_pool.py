@@ -29,3 +29,5 @@ if __name__ == '__main__':
         
     pool = Pool(4)
     pool.map(extract_frame, zip(src_paths, dst_paths))
+    pool.close()  # 关闭进程池，不再接受新的进程
+    pool.join()
